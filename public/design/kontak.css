@@ -1,0 +1,308 @@
+.contact-section {
+    padding: 50px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.contact-title {
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.row.gap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.col-half {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 16px 20px;
+}
+
+.contact-form textarea {
+    resize: none;
+    height: 100%;
+    min-height: 200px;
+}
+
+.form-footer {
+    margin-top: 20px;
+}
+
+.contact-form button {
+    width: 100%;
+    padding: 14px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #333;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-around;
+    margin: 50px 0 30px;
+    flex-wrap: wrap;
+    gap: 30px;
+    text-align: center;
+}
+
+.contact-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.map-full-bg {
+    width: 100%;
+    height: 500px;
+    background-color: #f0f0f0;
+    padding: 40px 0 0 0;
+    /* hanya padding atas */
+    margin-bottom: 0;
+    /* pastikan tidak ada jarak bawah */
+}
+
+.map-wrapper {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.map-container iframe,
+.map-wrapper iframe {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    margin: 0;
+    /* hilangkan margin bawaan */
+    display: block;
+}
+
+
+.site-footer {
+    background-color: #111;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+}
+
+.footer-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.footer-description {
+    color: #aaa;
+    line-height: 1.6;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #ff774d;
+}
+
+.footer-contact li {
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.footer-contact i {
+    margin-right: 8px;
+    color: #ff774d;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #1f1f1f;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.social-icons img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.social-icons a:hover {
+    background-color: #ff774d;
+    transform: scale(1.1);
+}
+
+
+.footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.copyright {
+    color: #aaa;
+    font-size: 14px;
+}
+
+@media (max-width: 991px) {
+    .kontak-title{
+        margin-left: 250px;
+    }
+
+    .hero-tentang {
+        padding: 80px 0 100px 0;
+    }
+
+    .hero-tentang .hero-content h1 {
+        padding-left: 50px;
+        font-size: 2.2rem !important;
+    }
+
+    .text-content,
+    .image1,
+    .image3,
+    .misi-text,
+    .visi-text {
+        padding: 0 20px !important;
+        margin: 0 auto !important;
+        text-align: center;
+    }
+
+    .visi-text,
+    .misi-text {
+        margin-bottom: 40px;
+    }
+
+    .img-landscape {
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 auto 30px auto !important;
+    }
+
+    .about-section p,
+    .deskripsi,
+    .deskripsi2 {
+        font-size: 1rem;
+        max-width: 100%;
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 575px) {
+    .kontak-title{
+        margin-left: -20px;
+    }
+
+    .site-header .logo {
+        font-size: 1.4rem !important;
+    }
+
+    .site-header .nav-link {
+        font-size: 0.9rem;
+        margin-right: 10px;
+    }
+
+    .footer-title {
+        font-size: 18px;
+    }
+
+    .footer-description,
+    .footer-links a,
+    .footer-contact li {
+        font-size: 14px;
+    }
+
+    .social-icons a {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+    }
+}
+
+.custom-toast {
+    display: flex;
+    align-items: center;
+    background-color: #e6fff0;
+    color: #1e4620;
+    border-left: 6px solid #28a745;
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 30px;
+    animation: slideDown 0.4s ease;
+}
+
+.toast-icon {
+    font-size: 22px;
+    margin-right: 12px;
+    color: #28a745;
+}
+
+.toast-message {
+    flex: 1;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #777;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toast-close:hover {
+    color: #333;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    

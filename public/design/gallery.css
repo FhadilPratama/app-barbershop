@@ -1,0 +1,161 @@
+/* Slider Wrapper sesuai header */
+.slider-wrapper {
+    background-color: #f0f0f0;
+    padding-top: 90px; 
+    padding-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 100px;
+    height: auto;
+}
+
+/* Carousel wrapper */
+#carouselExampleControls {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Gambar Slider */
+.slider-image {
+    width: 100% !important;
+    max-height: 350px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.08);
+    display: block;
+    margin: 0 auto;
+}
+
+/* Tombol Slider */
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.25);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-control-prev {
+    left: -20px;
+}
+.carousel-control-next {
+    right: -20px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background: none;
+    filter: none;
+    color: #000;
+    font-size: 24px;
+    transform: translateY(0);
+    margin-top: -10px;
+}
+
+/* Gallery Container */
+.gallery-container {
+    padding: 0 1rem;
+    max-width: 1200px;
+    margin: 0 auto 100px auto;
+    box-sizing: border-box;
+}
+
+/* Gallery Grid */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    justify-items: center;
+}
+
+/* Item Gallery */
+.gallery-item {
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1 / 1;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.02);
+}
+
+/* Responsiveness */
+
+/* Tablet (iPad Portrait) */
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 36px;
+        height: 36px;
+        padding-top: 10px;
+    }
+
+    .carousel-control-prev {
+        left: -16px;
+    }
+    .carousel-control-next {
+        right: -16px;
+    }
+}
+
+/* HP / Android / iPhone */
+@media (max-width: 600px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .slider-wrapper {
+        padding-top: 70px;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 30px;
+        height: 30px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        font-size: 18px;
+    }
+
+    .carousel-control-prev {
+        left: 0;
+        transform: translateX(-0%) translateY(-0%);
+    }
+
+    .carousel-control-next {
+        right: 0;
+        transform: translateX(0%) translateY(-0%);
+    }
+
+    .slider-image {
+        width: 320px !important;
+        height: 230px;
+    }
+}
