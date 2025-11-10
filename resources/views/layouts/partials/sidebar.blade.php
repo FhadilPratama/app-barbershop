@@ -25,7 +25,7 @@
 
                 <!-- Layanan -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.layanan.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
+                    <a href="{{ route('admin.services.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-scissors me-2 fs-5"></i>
                         <span>Layanan</span>
                     </a>
