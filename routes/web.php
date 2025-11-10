@@ -14,12 +14,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
-// Redirect / ke login atau dashboard jika sudah login
+// Redirect / ke dashboard
 Route::get('/', function () {
     return redirect()->route('admin.dashboard.index');
 });
 
-// Group routes admin, semua harus login & verified
+// Group routes admin (login & verified)
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
 
     // Dashboard
@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     // Promo
     Route::resource('promo', PromoController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
-    // Poin
+    // Point
     Route::resource('point', PointController::class)->only(['index', 'edit', 'update']);
 
     // Notifikasi
@@ -67,12 +67,12 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
 });
 
-// Group routes profile (harus login)
+// Profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Routes auth bawaan Laravel
-require __DIR__.'/auth.php';
+// Auth routes bawaan Laravel
+require __DIR__ . '/auth.php';

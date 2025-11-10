@@ -2,10 +2,8 @@
     <!-- Brand Logo -->
     <div class="sidebar-brand p-3 d-flex align-items-center">
         <a href="{{ route('admin.dashboard.index') }}" class="brand-link d-flex align-items-center text-decoration-none">
-            <img src="{{ asset('dist/assets/img/AdminLTELogo.png') }}" 
-                 alt="AdminLTE Logo"
-                 class="brand-image me-2 rounded shadow"
-                 style="width: 40px; height: 40px; object-fit: cover">
+            <img src="{{ asset('dist/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+                class="brand-image me-2 rounded shadow" style="width: 40px; height: 40px; object-fit: cover">
             <span class="brand-text fw-semibold fs-5 text-white">Barbershop Admin</span>
         </a>
     </div>
@@ -41,7 +39,8 @@
 
                 <!-- Pembayaran -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.pembayaran.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
+                    <a href="{{ route('admin.pembayaran.index') }}"
+                        class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-cash-stack me-2 fs-5"></i>
                         <span>Pembayaran</span>
                     </a>
@@ -56,8 +55,10 @@
                 </li>
 
                 <!-- Membership -->
+                <!-- Membership -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.membership.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
+                    <a href="{{ route('admin.membership.index') }}"
+                        class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-person-badge me-2 fs-5"></i>
                         <span>Membership</span>
                     </a>
@@ -81,7 +82,8 @@
 
                 <!-- Notifikasi -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.notifikasi.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
+                    <a href="{{ route('admin.notifikasi.index') }}"
+                        class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-bell me-2 fs-5"></i>
                         <span>Notifikasi</span>
                     </a>

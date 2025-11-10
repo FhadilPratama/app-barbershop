@@ -3,7 +3,7 @@
 
         <!-- Left Section -->
         <div class="text-center text-md-start">
-            &copy; {{ now()->year }}  
+            &copy; {{ now()->year }}
             <a href="https://cyberlabs.co.id/" target="_blank" class="text-decoration-none fw-bold" style="color: #0d6efd; transition: color 0.3s;">
                 CyberLabs
             </a>
