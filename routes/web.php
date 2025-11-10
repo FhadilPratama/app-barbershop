@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PointController;
 use App\Http\Controllers\Admin\NotifikasiController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 // Redirect / ke dashboard
@@ -50,6 +51,20 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // Laporan
     Route::resource('laporan', LaporanController::class)->only(['index']);
+
+    // Layanan (Service)
+    Route::prefix('admin')->group(function () {
+    Route::resource('services', ServiceController::class);
+});
+
+    // Booking
+    Route::resource('bookings', BookingController::class);
+    Route::get('/admin/bookings/service/{id}', [BookingController::class, 'getService']);
+
+
+
+    
+
 });
 
 // Profile
