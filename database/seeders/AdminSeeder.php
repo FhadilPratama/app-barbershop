@@ -19,6 +19,11 @@ class AdminSeeder extends Seeder
                 'name' => 'Admin Barbershop',
                 'password' => Hash::make('admin123'),
                 'email_verified_at' => now(),
+
+                // tambahkan field wajib baru
+                'no_handphone' => '081234567890',
+                'role' => 'admin',
+                'membership_status' => 'vip',
             ]
         );
     }

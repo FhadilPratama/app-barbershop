@@ -1,10 +1,11 @@
 <aside class="app-sidebar bg-body-secondary shadow p-3" data-bs-theme="dark">
     <!-- Brand Logo -->
     <div class="sidebar-brand p-3 d-flex align-items-center">
-        <a href="{{ route('admin.dashboard.index') }}" class="brand-link d-flex align-items-center text-decoration-none">
+        <a href="{{ route('admin.dashboard.index') }}"
+            class="brand-link d-flex align-items-center text-decoration-none">
             <img src="{{ asset('dist/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                 class="brand-image me-2 rounded shadow" style="width: 40px; height: 40px; object-fit: cover">
-            <span class="brand-text fw-semibold fs-5 text-white">Barbershop Admin</span>
+            <span class="brand-text fw-semibold fs-5 text-white">Go Bar Admin</span>
         </a>
     </div>
 
@@ -21,6 +22,14 @@
                     </a>
                 </li>
 
+                <!-- Users -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
+                        <i class="bi bi-people me-2 fs-5"></i>
+                        <span>Users</span>
+                    </a>
+                </li>
+
                 <!-- Layanan -->
                 <li class="nav-item">
                     <a href="{{ route('admin.services.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
@@ -31,7 +40,7 @@
 
                 <!-- Booking -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.booking.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
+                    <a href="{{ route('admin.bookings.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-calendar-check me-2 fs-5"></i>
                         <span>Booking</span>
                     </a>
@@ -47,47 +56,46 @@
                 </li>
 
                 <!-- Antrean -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ route('admin.antrean.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-people-fill me-2 fs-5"></i>
                         <span>Antrean</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Membership -->
-                <!-- Membership -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ route('admin.membership.index') }}"
                         class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-person-badge me-2 fs-5"></i>
                         <span>Membership</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Promo -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ route('admin.promo.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-gift me-2 fs-5"></i>
                         <span>Promo</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Poin -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ route('admin.point.index') }}" class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-coin me-2 fs-5"></i>
                         <span>Poin</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Notifikasi -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ route('admin.notifikasi.index') }}"
                         class="nav-link d-flex align-items-center px-3 py-2">
                         <i class="bi bi-bell me-2 fs-5"></i>
                         <span>Notifikasi</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Laporan -->
                 <li class="nav-item">

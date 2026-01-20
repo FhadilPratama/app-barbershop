@@ -9,13 +9,36 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->id(); // BIGINT PK
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
-            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
+            $table->id();
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+
+            $table->foreignId('service_id')
+                ->constrained('services')
+                ->cascadeOnDelete();
+
             $table->dateTime('booking_date');
-            $table->enum('status', ['pending', 'confirmed', 'paid', 'done', 'cancelled'])->default('pending');
+
+            // 🔒 STATUS DIKUNCI (TANPA CANCELLED)
+            $table->enum('status', ['unpaid', 'paid'])
+                ->default('unpaid');
+
+            // 💳 METODE PEMBAYARAN
+            $table->enum('payment_method', ['none', 'cash', 'online'])
+                ->default('none');
+
+            // 🔗 REFERENSI MIDTRANS
+            $table->string('payment_ref')->nullable();
+
+            $table->decimal('total_price', 10, 2);
+
+            $table->dateTime('payment_date')->nullable();
+
             $table->text('notes')->nullable();
-            $table->timestamps(); // created_at dan updated_at otomatis
+
+            $table->timestamps();
         });
     }
 

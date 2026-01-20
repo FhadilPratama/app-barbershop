@@ -12,82 +12,144 @@ class BookingController extends Controller
 {
     public function index()
     {
-        $bookings = Booking::with(['user', 'service'])->latest()->get();
+        $bookings = Booking::with(['user', 'service', 'payment'])->latest()->get();
         return view('admin.bookings.index', compact('bookings'));
     }
 
     public function create()
     {
-        $users = User::all();
-        $services = Service::all();
-        return view('admin.bookings.create', compact('users', 'services'));
+        return view('admin.bookings.create', [
+            'users' => User::all(),
+            'services' => Service::all(),
+        ]);
     }
 
+    /**
+     * 💾 CREATE BOOKING
+     * STATUS SELALU unpaid (DIKUNCI)
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'nullable|exists:users,id',
+            'manual_user_input' => 'nullable|string',
             'service_id' => 'required|exists:services,id',
             'booking_date' => 'required|date',
-            'status' => 'required|in:pending,confirmed,paid,done,cancelled',
             'notes' => 'nullable|string',
         ]);
 
-        Booking::create($request->only(['user_id', 'service_id', 'booking_date', 'status', 'notes']));
+        // ✅ Buat / ambil user
+        if (!$request->user_id && $request->manual_user_input) {
+            $user = User::create([
+                'name' => $request->manual_user_input,
+                'email' => strtolower(str_replace(' ', '', $request->manual_user_input)) . '@dummy.com',
+                'password' => bcrypt('password'),
+            ]);
+            $userId = $user->id;
+        } else {
+            $userId = $request->user_id;
+        }
 
-        return redirect()->route('admin.bookings.index')->with('success', 'Booking berhasil ditambahkan!');
-    }
+        $service = Service::findOrFail($request->service_id);
 
-    public function show(Booking $booking)
-    {
-        $booking->load(['user', 'service']);
-        return view('admin.bookings.show', compact('booking'));
+        Booking::create([
+            'user_id' => $userId,
+            'service_id' => $service->id,
+            'booking_date' => $request->booking_date,
+            'total_price' => $service->harga,
+            'notes' => $request->notes,
+            'status' => 'unpaid', // 🔒 KUNCI DI SINI
+        ]);
+
+        return redirect()
+            ->route('admin.bookings.index')
+            ->with('success', 'Booking berhasil dibuat (status: unpaid)');
     }
 
     public function edit(Booking $booking)
     {
-        $users = User::all();
-        $services = Service::all();
-        return view('admin.bookings.edit', compact('booking', 'users', 'services'));
+        return view('admin.bookings.edit', [
+            'booking' => $booking,
+            'users' => User::all(),
+            'services' => Service::all(),
+        ]);
     }
 
+    /**
+     * ✏️ UPDATE BOOKING
+     * TANPA SENTUH STATUS & PAYMENT
+     */
     public function update(Request $request, Booking $booking)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:services,id',
             'booking_date' => 'required|date',
-            'status' => 'required|in:pending,confirmed,paid,done,cancelled',
             'notes' => 'nullable|string',
         ]);
 
-        $booking->update($request->only(['user_id', 'service_id', 'booking_date', 'status', 'notes']));
+        $service = Service::findOrFail($request->service_id);
 
-        return redirect()->route('admin.bookings.index')->with('success', 'Booking berhasil diperbarui!');
+        $booking->update([
+            'user_id' => $request->user_id,
+            'service_id' => $service->id,
+            'booking_date' => $request->booking_date,
+            'total_price' => $service->harga,
+            'notes' => $request->notes,
+        ]);
+
+        return redirect()
+            ->route('admin.bookings.index')
+            ->with('success', 'Booking berhasil diperbarui');
     }
 
     public function destroy(Booking $booking)
     {
         $booking->delete();
-        return redirect()->route('admin.bookings.index')->with('success', 'Booking berhasil dihapus!');
+
+        return back()->with('success', 'Booking dihapus');
+    }
+
+    public function markAsPaid($id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        if ($booking->status === 'paid') {
+            return back()->with('error', 'Booking sudah dibayar');
+        }
+
+        $booking->update([
+            'status' => 'paid',
+            'payment_method' => 'cash',
+            'payment_date' => now(),
+        ]);
+
+        return back()->with('success', 'Pembayaran cash berhasil');
     }
 
     public function getService($id)
-{
-    $service = \App\Models\Service::find($id);
+    {
+        $service = Service::find($id);
 
-    if (!$service) {
-        return response()->json(['error' => 'Service tidak ditemukan'], 404);
+        if (!$service) {
+            return response()->json(['error' => 'Service tidak ditemukan'], 404);
+        }
+
+        return response()->json([
+            'id' => $service->id,
+            'category' => $service->nama,
+            'model' => $service->deskripsi,
+            'harga' => (int) $service->harga, // ⬅️ PENTING
+            'image_url' => $service->image
+                ? asset('uploads/services/' . $service->image)
+                : null,
+        ]);
     }
 
-    // Hapus 'public/' dari path
-    $imagePath = $service->image ? asset('uploads/services/' . $service->image) : null;
-
-    return response()->json([
-        'nama' => $service->nama,
-        'harga' => $service->harga,
-        'image_url' => $imagePath,
-    ]);
-}
+    public function show($id)
+    {
+        $booking = \App\Models\Booking::with(['user', 'service'])->findOrFail($id);
+        return view('admin.bookings.show', compact('booking'));
+    }
 
 }

@@ -1,127 +1,170 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2 class="mb-4">Tambah Booking</h2>
+<link rel="stylesheet" href="{{ asset('dist/css/admin/booking/create.css') }}">
 
-    <form action="{{ route('admin.bookings.store') }}" method="POST">
-        @csrf
+<div class="container py-4">
 
-        {{-- Pilih atau Input User --}}
-        <div class="mb-4">
-            <label for="userSelect" class="form-label fw-semibold">User</label>
+    <div class="card booking-create-card">
 
-            <!-- Input manual langsung di atas dropdown -->
-            <input type="text" id="manualUserInput" class="form-control mb-2" placeholder="Ketik nama user baru">
-
-            <select name="user_id" id="userSelect" class="form-select">
-                <option value="">-- Pilih User --</option>
-                @foreach($users as $u)
-                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                @endforeach
-            </select>
-
-            <div class="form-text">Jika user sudah ada, pilih dari daftar. Jika belum, ketik di atas.</div>
+        {{-- HEADER --}}
+        <div class="card-header booking-create-header">
+            <div>
+                <h4 class="booking-create-title">➕ Tambah Booking</h4>
+                <small class="booking-create-subtitle">Isi detail booking pelanggan dengan lengkap</small>
+            </div>
+            <span class="booking-status-badge">
+                Status: UNPAID
+            </span>
         </div>
 
-        {{-- Pilih Service --}}
-        <div class="mb-3">
-            <label>Service</label>
-            <select name="service_id" id="serviceSelect" class="form-control" required>
-                <option value="">-- Pilih Service --</option>
-                @foreach($services as $s)
-                    <option value="{{ $s->id }}">{{ $s->nama }}</option>
-                @endforeach
-            </select>
-        </div>
+        {{-- BODY --}}
+        <div class="card-body booking-create-body">
 
-        {{-- Harga Service --}}
-        <div id="servicePriceCard" class="card mb-3 p-3" style="display:none; max-width:400px;">
-            <p class="mb-0"><strong>Harga Service:</strong> Rp <span id="serviceharga"></span></p>
-        </div>
+            <form action="{{ route('admin.bookings.store') }}" method="POST">
+                @csrf
 
-        {{-- Foto Service --}}
-        <div id="serviceImageCard" class="card mb-4 p-3" style="display:none; max-width:150px;">
-            <img id="serviceImage" src="" alt="Service Image" class="img-thumbnail">
-        </div>
+                {{-- USER --}}
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">User</label>
 
-        {{-- Tanggal Booking --}}
-        <div class="mb-3">
-            <label>Tanggal Booking</label>
-            <input type="datetime-local" name="booking_date" class="form-control" required>
-        </div>
+                    <input type="text"
+                           name="manual_user_input"
+                           class="form-control form-control-lg booking-input mb-2"
+                           placeholder="✨ Ketik nama user baru">
 
-        {{-- Status --}}
-        <div class="mb-3">
-            <label>Status</label>
-            <select name="status" class="form-control" required>
-                <option value="pending">Pending</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="paid">Paid</option>
-                <option value="done">Done</option>
-                <option value="cancelled">Cancelled</option>
-            </select>
-        </div>
+                    <select name="user_id" class="form-select form-select-lg booking-input">
+                        <option value="">-- Pilih User --</option>
+                        @foreach($users as $u)
+                            <option value="{{ $u->id }}">{{ $u->name }}</option>
+                        @endforeach
+                    </select>
 
-        {{-- Catatan --}}
-        <div class="mb-3">
-            <label>Catatan</label>
-            <textarea name="notes" class="form-control" rows="3"></textarea>
-        </div>
+                    <div class="form-text">
+                        Pilih user yang ada atau ketik nama untuk user baru
+                    </div>
+                </div>
 
-        {{-- Tombol --}}
-        <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="{{ route('admin.bookings.index') }}" class="btn btn-secondary">Kembali</a>
-    </form>
+                {{-- SERVICE --}}
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Service</label>
+                    <select name="service_id"
+                            id="serviceSelect"
+                            class="form-select form-select-lg booking-input"
+                            required>
+                        <option value="">-- Pilih Service --</option>
+                        @foreach($services as $s)
+                            <option value="{{ $s->id }}">{{ $s->deskripsi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- INFO SERVICE --}}
+                <div id="serviceInfoCard" class="service-info-card" style="display:none; max-width:560px;">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-8">
+                            <p class="service-info-item">
+                                <span class="service-info-label">Category</span><br>
+                                <span id="serviceCategory" class="service-info-value">-</span>
+                            </p>
+                            <p class="service-info-item">
+                                <span class="service-info-label">Model</span><br>
+                                <span id="serviceModel" class="service-info-value">-</span>
+                            </p>
+                            <p class="service-info-item mb-0">
+                                <span class="service-info-label text-success">Harga</span><br>
+                                <span class="service-info-price">
+                                    Rp <span id="serviceHarga">-</span>
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="col-md-4 text-center" id="serviceImageWrapper" style="display:none;">
+                            <img id="serviceImage" class="service-info-image">
+                        </div>
+                    </div>
+                </div>
+
+                {{-- BOOKING DATE --}}
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Tanggal Booking</label>
+                    <input type="datetime-local"
+                           name="booking_date"
+                           class="form-control form-control-lg booking-input"
+                           required>
+                </div>
+
+                {{-- CATATAN --}}
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Catatan</label>
+                    <textarea name="notes"
+                              class="form-control form-control-lg booking-input"
+                              rows="3"
+                              placeholder="📝 Tambahkan catatan jika ada..."></textarea>
+                </div>
+
+                {{-- INFO STATUS --}}
+                <div class="booking-status-alert">
+                    <i class="fa-solid fa-circle-info me-2"></i>
+                    <strong>Status:</strong> Otomatis <b>UNPAID</b> saat booking dibuat
+                </div>
+
+                {{-- ACTION BUTTONS --}}
+                <div class="booking-action-buttons">
+                    <button class="btn btn-success btn-lg rounded-pill px-4 shadow-sm">
+                        <i class="fa-solid fa-floppy-disk me-2"></i> Simpan Booking
+                    </button>
+                    <a href="{{ route('admin.bookings.index') }}"
+                       class="btn btn-light btn-lg rounded-pill px-4 shadow-sm border">
+                        <i class="fa-solid fa-arrow-left me-2"></i> Kembali
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
 </div>
 
-{{-- Script AJAX untuk ambil harga & foto service --}}
+{{-- AJAX Service --}}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const serviceSelect = document.getElementById('serviceSelect');
-    serviceSelect.addEventListener('change', async function() {
+    document.getElementById('serviceSelect').addEventListener('change', async function () {
         const serviceId = this.value;
-        const priceCard = document.getElementById('servicePriceCard');
-        const imageCard = document.getElementById('serviceImageCard');
-        const priceEl = document.getElementById('serviceharga');
-        const imgEl = document.getElementById('serviceImage');
+
+        const card = document.getElementById('serviceInfoCard');
+        const category = document.getElementById('serviceCategory');
+        const model = document.getElementById('serviceModel');
+        const harga = document.getElementById('serviceHarga');
+        const imgWrap = document.getElementById('serviceImageWrapper');
+        const img = document.getElementById('serviceImage');
 
         if (!serviceId) {
-            priceCard.style.display = 'none';
-            imageCard.style.display = 'none';
+            card.style.display = 'none';
             return;
         }
 
         try {
-            const res = await fetch(`{{ url('admin/admin/bookings/service') }}/${serviceId}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                credentials: 'same-origin'
-            });
-
+            const res = await fetch(`{{ url('admin/bookings/service') }}/${serviceId}`);
             const data = await res.json();
-            console.log(data);
 
-            // tampilkan harga
-            priceEl.textContent = new Intl.NumberFormat('id-ID').format(data.harga);
-            priceCard.style.display = 'block';
+            category.textContent = data.category ?? '-';
+            model.textContent = data.model ?? '-';
+            harga.textContent = new Intl.NumberFormat('id-ID').format(data.harga);
 
-            // tampilkan gambar
             if (data.image_url) {
-                imgEl.src = data.image_url;
-                imageCard.style.display = 'block';
+                img.src = data.image_url;
+                imgWrap.style.display = 'block';
             } else {
-                imageCard.style.display = 'none';
+                imgWrap.style.display = 'none';
             }
 
-        } catch (err) {
-            console.error('Gagal ambil data service:', err);
-            priceCard.style.display = 'none';
-            imageCard.style.display = 'none';
+            card.style.display = 'block';
+
+        } catch (error) {
+            console.error('Gagal ambil service:', error);
+            card.style.display = 'none';
         }
     });
-});
 </script>
 @endsection

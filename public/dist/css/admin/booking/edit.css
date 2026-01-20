@@ -1,0 +1,132 @@
+/* =========================================
+   Booking Edit Page – Modern UI
+   ========================================= */
+
+body {
+    background: #f4f6fb;
+    font-family: "Poppins", sans-serif;
+    color: #1f2937;
+}
+
+/* Main Card */
+.booking-edit-card {
+    border: none;
+    border-radius: 1.25rem;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.booking-edit-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.booking-edit-header {
+    background: #ffffff;
+    border: none;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.booking-edit-title {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.booking-edit-subtitle {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.booking-status-badge {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 14px rgba(99, 102, 241, 0.35);
+}
+
+/* Body */
+.booking-edit-body {
+    padding: 2rem;
+}
+
+/* Inputs */
+.booking-input {
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+    transition: all 0.25s ease;
+}
+
+.booking-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.25);
+}
+
+/* Service Info Card */
+.service-info-card {
+    background: linear-gradient(135deg, #f8fafc, #eef2ff);
+    border-radius: 1.25rem;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.12);
+    animation: fadeInUp 0.3s ease forwards;
+}
+
+.service-info-item {
+    margin-bottom: 0.5rem;
+}
+
+.service-info-label {
+    display: inline-block;
+    background: #ffffff;
+    color: #4f46e5;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.15);
+    margin-bottom: 0.25rem;
+}
+
+.service-info-value {
+    font-weight: 600;
+    color: #111827;
+}
+
+.service-info-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #16a34a;
+}
+
+.service-info-image {
+    max-width: 140px;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Action Buttons */
+.booking-action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
