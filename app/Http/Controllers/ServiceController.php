@@ -7,11 +7,31 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function index()
-    {
-        $services = Service::all();
-        return view('admin.services.index', compact('services'));
+public function index(Request $request)
+{
+    $query = Service::query();
+
+    // Filter search
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('nama', 'like', "%{$search}%")
+              ->orWhere('deskripsi', 'like', "%{$search}%");
+        });
     }
+
+    // Filter category
+    if ($request->filled('category') && $request->category != 'all') {
+        $query->where('nama', $request->category); // tetap pakai nama field 'nama' agar tidak error
+    }
+
+    $services = $query->get();
+
+    // Ambil kategori unik untuk dropdown
+    $categories = Service::pluck('nama')->unique();
+
+    return view('admin.services.index', compact('services', 'categories'));
+}
 
     public function create()
     {
@@ -24,7 +44,6 @@ class ServiceController extends Controller
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'deskripsi' => 'nullable|string',
-            'status_aktif' => 'boolean',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -52,7 +71,6 @@ class ServiceController extends Controller
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'deskripsi' => 'nullable|string',
-            'status_aktif' => 'boolean',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 

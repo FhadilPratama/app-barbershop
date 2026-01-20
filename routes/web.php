@@ -1,78 +1,92 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\LayananController;
-use App\Http\Controllers\Admin\BookingController;
-use App\Http\Controllers\Admin\PembayaranController;
-use App\Http\Controllers\Admin\AntreanController;
-use App\Http\Controllers\Admin\MembershipController;
-use App\Http\Controllers\Admin\PromoController;
-use App\Http\Controllers\Admin\PointController;
-use App\Http\Controllers\Admin\NotifikasiController;
-use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\{
+    DashboardController,
+    LayananController,
+    BookingController,
+    PembayaranController,
+    AntreanController,
+    MembershipController,
+    PromoController,
+    PointController,
+    NotifikasiController,
+    LaporanController,
+    UserController
+};
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
-// Redirect / ke dashboard
-Route::get('/', function () {
-    return redirect()->route('admin.dashboard.index');
-});
+// Redirect root ke dashboard
+Route::get('/', fn() => redirect()->route('admin.dashboard.index'));
 
-// Group routes admin (login & verified)
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+// =======================
+// ADMIN ROUTES
+// =======================
+Route::middleware(['auth', 'verified'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('dashboard.index');
 
-    // Layanan
-    Route::resource('layanan', LayananController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        Route::resource('layanan', LayananController::class)
+            ->except('show');
 
-    // Booking
-    Route::resource('booking', BookingController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        Route::resource('bookings', BookingController::class);
+        Route::get('bookings/service/{id}', [BookingController::class, 'getService'])
+            ->name('bookings.getService');
 
-    // Pembayaran
-    Route::resource('pembayaran', PembayaranController::class)->only(['index', 'show']);
+        Route::post('bookings/{booking}/mark-as-paid', [BookingController::class, 'markAsPaid'])
+            ->name('bookings.markAsPaid');
 
-    // Antrean
-    Route::resource('antrean', AntreanController::class)->only(['index', 'show']);
+        // ===================
+        // PEMBAYARAN
+        // ===================
+        Route::get('pembayaran/history', [PembayaranController::class, 'history'])
+            ->name('pembayaran.history');
 
-    // Membership
-    Route::resource('membership', MembershipController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        Route::post('pembayaran/booking/{booking}/cash', [PembayaranController::class, 'payCash'])
+            ->name('pembayaran.cash');
 
-    // Promo
-    Route::resource('promo', PromoController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        Route::get('pembayaran/booking/{booking}/online', [PembayaranController::class, 'payOnline'])
+            ->name('pembayaran.online');
 
-    // Point
-    Route::resource('point', PointController::class)->only(['index', 'edit', 'update']);
+        Route::resource('pembayaran', PembayaranController::class)
+            ->only(['index', 'show']);
 
-    // Notifikasi
-    Route::resource('notifikasi', NotifikasiController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+        // 🔥 Simulasi hanya LOCAL
+        if (app()->environment(['local', 'testing'])) {
+            Route::post(
+                'pembayaran/callback-simulate',
+                [PembayaranController::class, 'callbackSimulate']
+            )->name('pembayaran.callback-simulate');
+        }
 
-    // Laporan
-    Route::resource('laporan', LaporanController::class)->only(['index']);
+        Route::resource('antrean', AntreanController::class)->only(['index', 'show']);
+        Route::resource('membership', MembershipController::class)->except('show');
+        Route::resource('promo', PromoController::class)->except('show');
+        Route::resource('point', PointController::class)->only(['index', 'edit', 'update']);
+        Route::resource('notifikasi', NotifikasiController::class)->except('show');
+        Route::resource('laporan', LaporanController::class)->only('index');
+        Route::resource('users', UserController::class)->except('show');
+        Route::resource('services', ServiceController::class);
+    });
 
-    // Layanan (Service)
-    Route::prefix('admin')->group(function () {
-    Route::resource('services', ServiceController::class);
-});
+// =======================
+// MIDTRANS CALLBACK
+// =======================
+Route::post('/midtrans/callback', [PembayaranController::class, 'callback']);
 
-    // Booking
-    Route::resource('bookings', BookingController::class);
-    Route::get('/admin/bookings/service/{id}', [BookingController::class, 'getService']);
-
-
-
-    
-
-});
-
-// Profile
+// =======================
+// PROFILE
+// =======================
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Auth routes bawaan Laravel
+// Auth routes
 require __DIR__ . '/auth.php';

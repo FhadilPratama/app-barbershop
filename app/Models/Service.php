@@ -9,7 +9,7 @@ class Service extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'harga', 'deskripsi', 'status_aktif', 'image'];
+    protected $fillable = ['nama', 'harga', 'deskripsi', 'image', 'price'];
 
     public function bookings()
     {
